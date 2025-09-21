@@ -1,0 +1,35 @@
+name: flexlingua_app
+description: "AEducational app for tongue tie (ankyloglossia) awareness and support."
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^3.0.0
+
+  # HTTP Requests
+  http: ^1.5.0
+
+  # Screen Responsiveness
+  flutter_screenutil: ^5.9.3
+
+  # Google Fonts
+  google_fonts: ^6.3.1
+
+  # Routing
+  go_router: ^16.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
