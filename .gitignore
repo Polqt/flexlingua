@@ -43,3 +43,51 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Flutter specific
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-versions
+.metadata
+
+# Android
+android/.gradle/
+android/local.properties
+
+# iOS
+ios/Flutter/ephemeral/
+ios/Pods/
+ios/Runner.xcworkspace/
+ios/build/
+ios/.symlinks/
+ios/Flutter/App.framework
+ios/Flutter/engine/
+ios/.generated/
+
+# macOS
+macos/Flutter/ephemeral/
+macos/Pods/
+macos/Runner.xcworkspace/
+macos/build/
+macos/.symlinks/
+macos/Flutter/App.framework
+macos/Flutter/engine/
+macos/.generated/
+
+# Linux
+linux/flutter/ephemeral/
+linux/build/
+
+# Windows
+windows/flutter/ephemeral/
+windows/build/
+
+# Web
+web/generated/
+
+# VS Code
+.vscode/
+
+# User-specific
+*.lock
+*.tmp
