@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1011916507295",
+    "project_id": "neat-shell-471011-u8",
+    "storage_bucket": "neat-shell-471011-u8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011916507295:android:065abb132046b190597aaa",
+        "android_client_info": {
+          "package_name": "com.example.flexlingua_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbZAeOM-upSHdg9Hm-QO952DfReKGBa8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

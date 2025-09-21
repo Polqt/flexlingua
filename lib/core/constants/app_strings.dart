@@ -1,7 +1,7 @@
 class AppStrings {
   // App Info
   static const String appName = 'Flexlingua';
-  static const String appVersiob = '1.0.0';
+  static const String appVersion = '1.0.0';
 
   // Navigation
   static const String home = 'Home';

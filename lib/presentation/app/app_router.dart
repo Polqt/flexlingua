@@ -7,6 +7,9 @@ import 'package:flexlingua_app/presentation/pages/education/education_page.dart'
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/',
+    onException: (_, GoRouterState state, GoRouter router) {
+      router.go('/404', extra: state.uri.toString());
+    },
     routes: [
       GoRoute(path: '/', builder: (context, state) => const HomePage()),
       GoRoute(

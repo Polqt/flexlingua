@@ -91,3 +91,9 @@ web/generated/
 # User-specific
 *.lock
 *.tmp
+
+# Firebase
+firebase.json
+.firebaserc
+.firebase/
+serviceAccountKey.json

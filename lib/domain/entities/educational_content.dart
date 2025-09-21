@@ -16,5 +16,11 @@ class EducationalContent {
     required this.tags,
     required this.createdAt,
   });
-  
+
+  bool matchesSearch(String searchTerm) {
+    final term = searchTerm.toLowerCase();
+    return title.toLowerCase().contains(term) ||
+        content.toLowerCase().contains(term) ||
+        tags.any((tag) => tag.toLowerCase().contains(term));
+  }
 }
