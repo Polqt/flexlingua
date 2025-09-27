@@ -9,19 +9,14 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final bool _isObscured = true;
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(authStateProvider);
 
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-
+          
         )
       ),
     );

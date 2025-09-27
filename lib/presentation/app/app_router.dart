@@ -1,3 +1,5 @@
+import 'package:flexlingua_app/presentation/pages/exercises/exercises_page.dart';
+import 'package:flexlingua_app/presentation/pages/progress/progress_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +17,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/education',
         builder: (context, state) => const EducationPage(),
+      ),
+      GoRoute(
+        path: '/exercises',
+        builder: (context, state) => const ExercisesPage(),
+      ),
+      GoRoute(
+        path: '/progress',
+        builder: (context, state) => const ProgressPage(),
       ),
     ],
   );
