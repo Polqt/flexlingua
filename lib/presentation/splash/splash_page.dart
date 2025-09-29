@@ -1,19 +1,23 @@
 import 'dart:async';
 import 'package:flexlingua_app/core/constants/app_colors.dart';
+import 'package:flexlingua_app/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
-class SplashPage extends StatefulWidget {
+class SplashPage extends ConsumerStatefulWidget {
   const SplashPage({super.key});
 
   @override
-  State<SplashPage> createState() => _SplashPageState();
+  ConsumerState<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
+class _SplashPageState extends ConsumerState<SplashPage>
+    with TickerProviderStateMixin {
   late AnimationController _fadeController;
   late Animation<double> _fadeAnimation;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -30,18 +34,26 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
     _fadeController.forward();
 
-    loadSplash();
-  }
-
-  Future<Timer> loadSplash() async {
-    return Timer(const Duration(seconds: 3), onDoneLoading);
+    _timer = Timer(const Duration(seconds: 3), onDoneLoading);
   }
 
   void onDoneLoading() async {
     await _fadeController.reverse();
     if (mounted) {
-      context.go('/login');
+      final authState = ref.read(authStateProvider);
+      if (authState.value != null) {
+        context.go('/');
+      } else {
+        context.go('/login');
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _fadeController.dispose();
+    super.dispose();
   }
 
   @override

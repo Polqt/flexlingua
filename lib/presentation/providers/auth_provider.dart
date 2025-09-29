@@ -17,7 +17,7 @@ final authStateProvider = StreamProvider((ref) {
 class AuthNotifier extends StateNotifier<AsyncValue<AppUser?>> {
   final AuthRepository _authRepository;
 
-  AuthNotifier(this._authRepository) : super(const AsyncValue.loading());
+  AuthNotifier(this._authRepository) : super(const AsyncValue.data(null));
 
   Future<void> signIn(String email, String password) async {
     state = const AsyncValue.loading();
@@ -30,11 +30,23 @@ class AuthNotifier extends StateNotifier<AsyncValue<AppUser?>> {
     }
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp(
+    String email,
+    String password, {
+    String? childName,
+    DateTime? childBirthDate,
+    List<String>? learningLanguages,
+  }) async {
     state = const AsyncValue.loading();
 
     try {
-      final user = await _authRepository.signUpWithEmail(email, password);
+      final user = await _authRepository.signUpWithEmail(
+        email,
+        password,
+        childName: childName,
+        childBirthDate: childBirthDate,
+        learningLanguages: learningLanguages,
+      );
       state = AsyncValue.data(user);
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);

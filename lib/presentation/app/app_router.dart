@@ -19,11 +19,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       router.go('/404', extra: state.uri.toString());
     },
     redirect: (context, state) {
+      if (state.uri.toString() == '/splash') return null;
+
       final isLoggedIn = authState.value != null;
       final isAuthRoute =
-          state.uri.toString() == '/login' ||
-          state.uri.toString() == '/signup' ||
-          state.uri.toString() == '/splash';
+          state.uri.toString() == '/login' || state.uri.toString() == '/signup';
 
       if (!isLoggedIn && !isAuthRoute) {
         return '/login';

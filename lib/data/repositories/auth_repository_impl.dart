@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flexlingua_app/data/models/app_user_model.dart';
 import 'package:flexlingua_app/domain/entities/app_user.dart';
@@ -25,13 +26,35 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<AppUser> signUpWithEmail(String email, String password) async {
+  Future<AppUser> signUpWithEmail(
+    String email,
+    String password, {
+    String? childName,
+    DateTime? childBirthDate,
+    List<String>? learningLanguages,
+  }) async {
     final result = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
 
-    return AppUserModel.fromFirebaseUser(result.user!);
+    final user = result.user!;
+    final appUser = AppUserModel(
+      id: user.uid,
+      email: email,
+      createdAt: user.metadata.creationTime ?? DateTime.now(),
+      lastLoginAt: user.metadata.lastSignInTime ?? DateTime.now(),
+      childName: childName,
+      childBirthDate: childBirthDate,
+      learningLanguages: learningLanguages,
+    );
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .set(appUser.toJson());
+
+    return appUser;
   }
 
   @override
@@ -51,6 +74,17 @@ class AuthRepositoryImpl implements AuthRepository {
       await user.updateDisplayName(displayName);
       await user.updatePhotoURL(photoURL);
       await user.reload();
+
+      final docRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid);
+      final data = <String, dynamic>{};
+
+      if (displayName != null) data['displayName'] = displayName;
+      if (photoURL != null) data['photoUrl'] = photoURL;
+      if (childName != null) data['childName'] = childName;
+      if (childBirthDate != null) data['childBirthDate'] = childBirthDate;
+      await docRef.update(data);
     }
   }
 

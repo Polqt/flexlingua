@@ -3,7 +3,7 @@ import 'package:flexlingua_app/domain/entities/app_user.dart';
 abstract class AuthRepository {
   Future<AppUser?> getCurrentUser();
   Future<AppUser> signInWithEmail(String email, String password);
-  Future<AppUser> signUpWithEmail(String email, String password);
+  Future<AppUser> signUpWithEmail(String email, String password, {String? childName, DateTime? childBirthDate, List<String>? learningLanguages});
   Future<void> signOut();
   Future<void> sendEmailResetPassword(String email);
 

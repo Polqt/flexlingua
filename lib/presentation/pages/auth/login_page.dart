@@ -2,6 +2,7 @@ import 'package:flexlingua_app/core/utils/validators.dart';
 import 'package:flexlingua_app/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -75,15 +76,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 },
               ),
               const SizedBox(height: 24),
-              authState.isLoading
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _login,
-                      child: const Text('Login'),
-                    ),
+              if (authState.isLoading) const CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: authState.isLoading ? null : _login,
+                child: const Text('Login'),
+              ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/signup');
+                  context.go('/signup');
                 },
                 child: const Text('Don\t have an account? Sign up'),
               ),
