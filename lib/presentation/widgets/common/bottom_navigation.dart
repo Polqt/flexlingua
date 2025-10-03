@@ -19,15 +19,7 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   List<SMIBool> riveIconInputs = [];
   List<StateMachineController> controllers = [];
-  int selectNavIndex = 0;
-  List<String> pages = [
-    "Home",
-    "Education",
-    "Exercises",
-    "Progress",
-    "Profile",
-  ];
-
+  
   void animateIcon(int index) {
     riveIconInputs[index].change(true);
     Future.delayed(Duration(seconds: 1), () {
@@ -56,59 +48,54 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text(pages[selectNavIndex])),
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: AppColors.primaryDark.withValues(alpha: .8),
-            borderRadius: BorderRadius.all(Radius.circular(24)),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primaryDark.withValues(alpha: 0.4),
-                offset: Offset(0, 20),
-                blurRadius: 20,
-              ),
-            ],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(bottomNavItems.length, (index) {
-              final riveIcon = bottomNavItems[index].rive;
-              return GestureDetector(
-                onTap: () {
-                  animateIcon(index);
-                  setState(() {
-                    selectNavIndex = index;
-                  });
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AnimatedBar(isActive: selectNavIndex == index),
-                    SizedBox(
-                      height: 36,
-                      width: 36,
-                      child: Opacity(
-                        opacity: selectNavIndex == index ? 1 : 0.5,
-                        child: RiveAnimation.asset(
-                          bottomNavItems[index].rive.src,
-                          artboard: bottomNavItems[index].rive.artboard,
-                          onInit: (artboard) {
-                            riveOnInit(
-                              artboard,
-                              stateMachineName: riveIcon.stateMachineName,
-                            );
-                          },
-                        ),
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppColors.primaryDark.withValues(alpha: .8),
+          borderRadius: BorderRadius.all(Radius.circular(24)),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primaryDark.withValues(alpha: 0.4),
+              offset: Offset(0, 20),
+              blurRadius: 20,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(bottomNavItems.length, (index) {
+            final riveIcon = bottomNavItems[index].rive;
+            return GestureDetector(
+              onTap: () {
+                animateIcon(index);
+                widget.onTabSelected(index);
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AnimatedBar(isActive: widget.currentIndex == index),
+                  SizedBox(
+                    height: 36,
+                    width: 36,
+                    child: Opacity(
+                      opacity: widget.currentIndex == index ? 1 : 0.5,
+                      child: RiveAnimation.asset(
+                        bottomNavItems[index].rive.src,
+                        artboard: bottomNavItems[index].rive.artboard,
+                        onInit: (artboard) {
+                          riveOnInit(
+                            artboard,
+                            stateMachineName: riveIcon.stateMachineName,
+                          );
+                        },
                       ),
                     ),
-                  ],
-                ),
-              );
-            }),
-          ),
+                  ),
+                ],
+              ),
+            );
+          }),
         ),
       ),
     );

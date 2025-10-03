@@ -1,4 +1,5 @@
 import 'package:flexlingua_app/presentation/providers/auth_provider.dart';
+import 'package:flexlingua_app/presentation/widgets/common/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    const routes = ['/', '/education', '/exercises', '/progress'];
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -25,6 +27,10 @@ class HomePage extends ConsumerWidget {
         ],
       ),
       body: const Center(child: Text('Welcome to the Home Page!')),
+      bottomNavigationBar: BottomNavigation(
+        currentIndex: 1,
+        onTabSelected: (index) => context.go(routes[index]),
+      ),
     );
   }
 }
