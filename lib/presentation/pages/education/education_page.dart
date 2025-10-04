@@ -12,12 +12,17 @@ class EducationPage extends StatefulWidget {
 class _EducationPageState extends State<EducationPage> {
   @override
   Widget build(BuildContext context) {
-    const routes = ['/', '/education', '/exercises', '/progress'];
+    const routes = ['/', '/education', '/exercises', '/progress', '/profile'];
     return SafeArea(
       child: Scaffold(
+        body: const Text('Education Page'),
         bottomNavigationBar: BottomNavigation(
-          currentIndex: 0,
-          onTabSelected: (index) => context.go(routes[index]),
+          currentIndex: 1,
+          onTabSelected: (index) {
+            if (index != 1) {
+              context.go(routes[index]);
+            }
+          },
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flexlingua_app/core/constants/app_colors.dart';
 import 'package:flexlingua_app/data/models/nav_item_model.dart';
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart';
 
 class BottomNavigation extends StatefulWidget {
   final Function(int) onTabSelected;
@@ -17,35 +16,6 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  List<SMIBool> riveIconInputs = [];
-  List<StateMachineController> controllers = [];
-  
-  void animateIcon(int index) {
-    riveIconInputs[index].change(true);
-    Future.delayed(Duration(seconds: 1), () {
-      riveIconInputs[index].change(false);
-    });
-  }
-
-  void riveOnInit(Artboard artboard, {required String stateMachineName}) {
-    StateMachineController? controller = StateMachineController.fromArtboard(
-      artboard,
-      stateMachineName,
-    );
-    artboard.addController(controller!);
-    controllers.add(controller);
-
-    riveIconInputs.add(controller.findInput<bool>('active') as SMIBool);
-  }
-
-  @override
-  void dispose() {
-    for (var controller in controllers) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -65,10 +35,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(bottomNavItems.length, (index) {
-            final riveIcon = bottomNavItems[index].rive;
+            final isSelected = widget.currentIndex == index;
             return GestureDetector(
               onTap: () {
-                animateIcon(index);
                 widget.onTabSelected(index);
               },
               child: Column(
@@ -80,15 +49,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
                     width: 36,
                     child: Opacity(
                       opacity: widget.currentIndex == index ? 1 : 0.5,
-                      child: RiveAnimation.asset(
-                        bottomNavItems[index].rive.src,
-                        artboard: bottomNavItems[index].rive.artboard,
-                        onInit: (artboard) {
-                          riveOnInit(
-                            artboard,
-                            stateMachineName: riveIcon.stateMachineName,
-                          );
-                        },
+                      child: Icon(
+                        bottomNavItems[index].icon,
+                        color: isSelected
+                            ? AppColors.background
+                            : AppColors.background.withValues(alpha: 0.5),
                       ),
                     ),
                   ),

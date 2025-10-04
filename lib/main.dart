@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flexlingua_app/core/middleware/auth_middleware.dart';
 import 'package:flexlingua_app/data/repositories/auth_repository_impl.dart';
 import 'package:flexlingua_app/data/repositories/content_repository_impl.dart';
 import 'package:flexlingua_app/data/sources/local/content_local_data_source.dart';
@@ -19,11 +20,16 @@ void main() async {
 
   final prefs = await SharedPreferences.getInstance();
 
+  final authMiddleware = AuthMiddleware(FirebaseAuth.instance);
+
   runApp(
     ProviderScope(
       overrides: [
         authRepositoryProvider.overrideWithValue(
-          AuthRepositoryImpl(FirebaseAuth.instance),
+          AuthRepositoryImpl(
+            FirebaseAuth.instance,
+            authMiddleware,
+          ),
         ),
         contentRepositoryProvider.overrideWithValue(
           ContentRepositoryImpl(

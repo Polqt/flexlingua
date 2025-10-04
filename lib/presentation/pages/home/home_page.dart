@@ -9,7 +9,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const routes = ['/', '/education', '/exercises', '/progress'];
+    const routes = ['/', '/education', '/exercises', '/progress', '/profile'];
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -28,8 +28,12 @@ class HomePage extends ConsumerWidget {
       ),
       body: const Center(child: Text('Welcome to the Home Page!')),
       bottomNavigationBar: BottomNavigation(
-        currentIndex: 1,
-        onTabSelected: (index) => context.go(routes[index]),
+        currentIndex: 0,
+        onTabSelected: (index) {
+          if (index != 0) {
+            context.go(routes[index]);
+          }
+        },
       ),
     );
   }

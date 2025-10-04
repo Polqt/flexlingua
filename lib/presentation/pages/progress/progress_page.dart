@@ -12,12 +12,17 @@ class ProgressPage extends StatefulWidget {
 class _ProgressPageState extends State<ProgressPage> {
   @override
   Widget build(BuildContext context) {
-    const routes = ['/', '/education', '/exercises', '/progress'];
+    const routes = ['/', '/education', '/exercises', '/progress', '/profile'];
     return SafeArea(
       child: Scaffold(
+        body: const Text('Progress Page'),
         bottomNavigationBar: BottomNavigation(
-          currentIndex: 0,
-          onTabSelected: (index) => context.go(routes[index]),
+          currentIndex: 3,
+          onTabSelected: (index) {
+          if (index != 3) {
+            context.go(routes[index]);
+          }
+        },
         ),
       ),
     );

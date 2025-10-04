@@ -1,13 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:flexlingua_app/core/middleware/auth_middleware.dart';
 import 'package:flexlingua_app/data/models/app_user_model.dart';
 import 'package:flexlingua_app/domain/entities/app_user.dart';
 import 'package:flexlingua_app/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final firebase_auth.FirebaseAuth _firebaseAuth;
+  final AuthMiddleware _authMiddleware;
 
-  AuthRepositoryImpl(this._firebaseAuth);
+  AuthRepositoryImpl(this._firebaseAuth, this._authMiddleware);
 
   @override
   Future<AppUser?> getCurrentUser() async {
@@ -17,12 +19,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<AppUser> signInWithEmail(String email, String password) async {
-    final result = await _firebaseAuth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    return _authMiddleware.withAuth(() async {
+      final result = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    return AppUserModel.fromFirebaseUser(result.user!);
+      return AppUserModel.fromFirebaseUser(result.user!);
+    });
   }
 
   @override
@@ -33,28 +37,30 @@ class AuthRepositoryImpl implements AuthRepository {
     DateTime? childBirthDate,
     List<String>? learningLanguages,
   }) async {
-    final result = await _firebaseAuth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    return _authMiddleware.withAuth(() async {
+      final result = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    final user = result.user!;
-    final appUser = AppUserModel(
-      id: user.uid,
-      email: email,
-      createdAt: user.metadata.creationTime ?? DateTime.now(),
-      lastLoginAt: user.metadata.lastSignInTime ?? DateTime.now(),
-      childName: childName,
-      childBirthDate: childBirthDate,
-      learningLanguages: learningLanguages,
-    );
+      final user = result.user!;
+      final appUser = AppUserModel(
+        id: user.uid,
+        email: email,
+        createdAt: user.metadata.creationTime ?? DateTime.now(),
+        lastLoginAt: user.metadata.lastSignInTime ?? DateTime.now(),
+        childName: childName,
+        childBirthDate: childBirthDate,
+        learningLanguages: learningLanguages,
+      );
 
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid)
-        .set(appUser.toJson());
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .set(appUser.toJson());
 
-    return appUser;
+      return appUser;
+    });
   }
 
   @override

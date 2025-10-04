@@ -1,6 +1,7 @@
 import 'package:flexlingua_app/presentation/pages/auth/login_page.dart';
 import 'package:flexlingua_app/presentation/pages/auth/signup_page.dart';
 import 'package:flexlingua_app/presentation/pages/exercises/exercises_page.dart';
+import 'package:flexlingua_app/presentation/pages/profile/profile_page.dart';
 import 'package:flexlingua_app/presentation/pages/progress/progress_page.dart';
 import 'package:flexlingua_app/presentation/providers/auth_provider.dart';
 import 'package:flexlingua_app/presentation/splash/splash_page.dart';
@@ -48,6 +49,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/progress',
         builder: (context, state) => const ProgressPage(),
+      ),
+      GoRoute(
+        path: '/profile',
+        builder: (context, state) => const ProfilePage(),
       ),
       GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
       GoRoute(path: '/signup', builder: (context, state) => const SignupPage()),

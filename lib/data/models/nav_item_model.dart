@@ -1,51 +1,16 @@
-import 'package:flexlingua_app/data/models/rive_model.dart';
+import 'package:flutter/material.dart';
 
 class NavItemModel {
   final String title;
-  final RiveModel rive;
+  final IconData icon;
 
-  NavItemModel({required this.title, required this.rive});
+  NavItemModel({required this.title, required this.icon});
 }
 
 List<NavItemModel> bottomNavItems = [
-  NavItemModel(
-    title: 'Home',
-    rive: RiveModel(
-      src: 'assets/RiveAssets/icons.riv',
-      artboard: 'Home',
-      stateMachineName: 'StateMachine',
-    ),
-  ),
-  NavItemModel(
-    title: 'Profile',
-    rive: RiveModel(
-      src: 'assets/RiveAssets/icons.riv',
-      artboard: 'Profile',
-      stateMachineName: 'StateMachine',
-    ),
-  ),
-  NavItemModel(
-    title: 'Education',
-    rive: RiveModel(
-      src: 'assets/RiveAssets/icons.riv',
-      artboard: 'Education',
-      stateMachineName: 'StateMachine',
-    ),
-  ),
-  NavItemModel(
-    title: 'Exercises',
-    rive: RiveModel(
-      src: 'assets/RiveAssets/icons.riv',
-      artboard: 'Exercises',
-      stateMachineName: 'StateMachine',
-    ),
-  ),
-  NavItemModel(
-    title: 'Progress',
-    rive: RiveModel(
-      src: 'assets/RiveAssets/icons.riv',
-      artboard: 'Progress',
-      stateMachineName: 'StateMachine',
-    ),
-  ),
+  NavItemModel(title: 'Home', icon: Icons.home),
+  NavItemModel(title: 'Profile', icon: Icons.person),
+  NavItemModel(title: 'Education', icon: Icons.school),
+  NavItemModel(title: 'Exercises', icon: Icons.fitness_center),
+  NavItemModel(title: 'Progress', icon: Icons.bar_chart),
 ];

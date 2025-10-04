@@ -1,12 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flexlingua_app/data/repositories/auth_repository_impl.dart';
 import 'package:flexlingua_app/domain/entities/app_user.dart';
 import 'package:flexlingua_app/domain/repositories/auth_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepositoryImpl(FirebaseAuth.instance);
+  throw UnimplementedError('AuthRepository is not implemented');
 });
 
 final authStateProvider = StreamProvider((ref) {
